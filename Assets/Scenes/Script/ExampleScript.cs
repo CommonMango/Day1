@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class ExampleScript : MonoBehaviour
@@ -7,25 +8,37 @@ public class ExampleScript : MonoBehaviour
   
     void Awake()
     {
-
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
     }
     void OnEnable()
     {
-
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
     }
     void Start()
     {
-        Debug.Log("게임 시작");
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
     }
 
-   
     void Update()
     {
-        //Debug.Log("업데이트");
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
     }
 
+    private void FixedUpdate()
+    {
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
+    }
+
+    private void LateUpdate()
+    {
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
+    }
     private void OnDisable()
     {
-        Debug.Log("비활성화");
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
+    }
+    private void OnDestroy()
+    {
+        Debug.Log($"{MethodBase.GetCurrentMethod().Name}호출");
     }
 }
