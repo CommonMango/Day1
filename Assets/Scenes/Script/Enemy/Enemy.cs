@@ -1,11 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro;
 using UnityEngine;
-
-
-
 
 public class EnemyController : MonoBehaviour
 {
@@ -44,20 +37,23 @@ public class EnemyController : MonoBehaviour
         if(collision.gameObject.CompareTag("Bullet"))
         {
             TakeDamage();
-        }
+        }      
+    }
 
-        if(collision.gameObject.CompareTag("Wall"))
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Wall"))
         {
             gameObject.SetActive(false);
         }
     }
 
+
     private void TakeDamage()
     {
         _currentDeactiveCount--;
         if(_currentDeactiveCount <= 0)
-        {
-            
+        {            
             gameObject.SetActive(false);
         }
     }

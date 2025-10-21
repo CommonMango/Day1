@@ -1,48 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-   
-    [SerializeField]private GameObject bulletObject; //발사될 총알 
-    [SerializeField] private float firerate; //발사 간격 
-    [SerializeField] private int _bulletPoolSize; //오브젝트 풀 사이즈 
+    [SerializeField] private GameObject _bulletObject; // 발사될 총알 
+    [SerializeField] private float _fireRate = 0.2f;   // 발사 간격
 
-    private Queue<GameObject> _bulletPool = new Queue<GameObject>();
-             
-    void Awake()
+    private WaitForSeconds _firedelay;
+
+    private void Start()
     {
-        Init();         
+        _firedelay = new WaitForSeconds(_fireRate);
     }
-   
-    private void Init()
+
+    public void StartShooting()
+    { 
+       StartCoroutine(Shooting());
+    }  
+
+    private IEnumerator Shooting()
     {       
-        _bulletPool = new Queue<GameObject>();
-
-        for (int i = 0; i < _bulletPoolSize; i++)
-        {
-            GameObject gameObject = Instantiate(bulletObject);
-            gameObject.SetActive(false);
-            _bulletPool.Enqueue(gameObject);
-        }
+        ObjectManager.Instance.Spawn(_bulletObject, transform.position, transform.rotation);           
+        yield return _firedelay;       
     }
-    
-    public void ShootBullet()
-    {
-        foreach(var bullet in _bulletPool)
-        {
-            if(bullet.activeSelf == false)
-            {
-                bullet.transform.position = transform.position;
-                bullet.transform.rotation = transform.rotation;
-                bullet.SetActive(true);
-                return;
-            }
-        }
-        
-    }
-
-    
-         
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-   private static T _instance;
+    private static T _instance;
 
     //외부 호출용 프로퍼티, 해당 싱글톤이 없으면 찾아보고 그래도 없으면 새로 생성 후 설정 
     public static T Instance

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemy;
+    [SerializeField] private GameObject _enemy; //적 프리팹
     [SerializeField] private int _enemyPoolSize;//풀 사이즈 지정 
     [SerializeField] private float _spawnDelay; // 적 스폰 딜레이 지정
 
@@ -20,29 +20,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void Init() //초기화 함수
     {
-        _delay = new WaitForSeconds(_spawnDelay);
-        _enemyPool = new GameObject[_enemyPoolSize];
-
-        for (int i = 0; i < _enemyPoolSize; i++) //오브젝트풀 생성
-        {
-            GameObject gameObject = Instantiate(_enemy);
-            _enemyPool[i] = gameObject;
-            _enemyPool[i].SetActive(false);
-            
-        }
+        _delay = new WaitForSeconds(_spawnDelay);                   
     }
 
     private IEnumerator SpawnEnemy()
-    {      
-            foreach (var enemy in _enemyPool)
-            {
-                if (enemy.activeSelf == false) //비활성화된 적을 가져와 활성화 
-                {
-                    enemy.transform.position = transform.position;
-                    enemy.transform.rotation = transform.rotation;
-                    enemy.SetActive(true);
-                    yield return _delay;                           
-                }
+    {
+        while (true)
+        {
+            ObjectManager.Instance.Spawn(_enemy, transform.position, transform.rotation);
+            yield return _delay;                           
         }
+                
     }
 }
+

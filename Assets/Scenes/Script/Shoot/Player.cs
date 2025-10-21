@@ -5,8 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameObject playerWeapon;
-    [SerializeField] private int playerMaxHp;
-    [SerializeField] private int playerCurHp; //플레이어 현재 체력
+    [SerializeField] private int playerMaxHp = 100;
+    private int playerCurHp; //플레이어 현재 체력
 
     Weapon BulletShooter;
 
@@ -19,15 +19,16 @@ public class Player : MonoBehaviour
     {       
         if (Input.GetKeyDown(KeyCode.Space))
         {          
-            BulletShooter.ShootBullet();            
+            BulletShooter.StartShooting();            
         }       
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
+        if(other.gameObject.CompareTag("Enemy"))
         {
             playerCurHp -= 10;
+            Debug.Log($"{playerCurHp}");
             if (playerCurHp <= 0)
             {
                 gameObject.SetActive(false);

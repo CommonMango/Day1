@@ -22,10 +22,10 @@ public class Bullet : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
-    
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-       gameObject.SetActive(false);     
+        gameObject.SetActive(false);
     }
 
     private void ShootAction()
