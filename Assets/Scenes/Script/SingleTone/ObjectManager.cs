@@ -1,28 +1,29 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectManager : Singleton<ObjectManager> //싱글톤 생성해주는 스크립트 상속 
+public class ObjectManager : Singleton<ObjectManager>
 {
-    [SerializeField] private int poolSize = 10; //오브젝트 풀 사이즈           
-    [SerializeField] private List<GameObject> targetObjects = new List<GameObject>(); //프리팹보관 리스트 
-
+    [SerializedDictionary("ObjectPrefab", "ObjectPoolSize")]
+    public SerializedDictionary<GameObject, int> _poolSizeDictionary; //pool size를 보관하는 딕셔너리 
+ 
     private Dictionary<GameObject, GameObject[]> _poolDictionary; //pool을 보관하는 딕셔너리
                                                                      
     protected override void Awake()
     {
         base.Awake();
-        
+
         _poolDictionary = new Dictionary<GameObject, GameObject[]>();
         CreatePools();       
     }
     
     private void CreatePools() //오브젝트 풀 생성 
     {   
-        foreach(var obj in targetObjects)
+        foreach(var obj in _poolSizeDictionary.Keys)
         {
-            var objects = new GameObject[poolSize];
+            var objects = new GameObject[_poolSizeDictionary[obj]];
        
-            for (int i = 0; i < poolSize; i++)
+            for (int i = 0; i < objects.Length; i++)
             {
                 GameObject gameobj = Instantiate(obj);
                 gameobj.SetActive(false);
@@ -46,7 +47,7 @@ public class ObjectManager : Singleton<ObjectManager> //싱글톤 생성해주�
                 return;
             }
         }               
-    }        
+    }      
 }
 
 
