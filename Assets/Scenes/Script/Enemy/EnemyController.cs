@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -28,8 +29,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void MoveObject()
-    {
-        
+    {        
         transform.position += transform.forward * _moveSpeed * Time.fixedDeltaTime;
     }
 
@@ -56,4 +56,7 @@ public class EnemyController : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+
+    
 }

@@ -1,16 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
-   [SerializeField]private bool _isPlaying = false;
+   private bool _isPlaying = false;
     
-   public bool isPlaying { get { return _isPlaying; } }
-    
+    public bool isPlaying { get { return _isPlaying; } }
+    public event Action OnGameStartAction; 
+    [field : SerializeField]public UnityEvent OnGameEndAction { get; private set; } = new UnityEvent();
     public void ChangeGameState()
     {
         _isPlaying = !_isPlaying;
+        if(_isPlaying)
+            OnGameStartAction?.Invoke();
+        else
+            OnGameEndAction?.Invoke();
     }
     
 }

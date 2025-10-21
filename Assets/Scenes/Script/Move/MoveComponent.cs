@@ -43,7 +43,10 @@ public class MoveComponent : MonoBehaviour
 
     private void Move()
     {
-     
+        //현재 게임이 진행중인지 체크 
+        if (GameManager.Instance.isPlaying == false)
+            return;
+
         Vector3 inputVec = new Vector3(_inputComponent.HoriInput, 0f, _inputComponent.VertInput).normalized;
         Vector3 deltaMovement = _moveSpeed * Time.deltaTime * inputVec;
         Vector3 nextPosition = transform.position + deltaMovement;

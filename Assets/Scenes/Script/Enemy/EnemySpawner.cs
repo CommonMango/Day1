@@ -28,11 +28,16 @@ public class EnemySpawner : MonoBehaviour
         
         while (true)
         {
-            int result = Random.Range(0, _enemies.Count);
-            _targetEnemy = _enemies[result];
+            yield return _delay; 
             
-            ObjectManager.Instance.Spawn(_targetEnemy, transform.position, transform.rotation);
-            yield return _delay;                           
+            if (GameManager.Instance.isPlaying)
+            {
+                int result = Random.Range(0, _enemies.Count);
+                _targetEnemy = _enemies[result];
+            
+                ObjectManager.Instance.Spawn(_targetEnemy, transform.position, transform.rotation);
+                                          
+            }
         }
                 
     }
